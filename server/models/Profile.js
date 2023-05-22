@@ -13,9 +13,14 @@ const profileSchema = new Schema({
     min: 0,
     default: 0,
   },
-  purchased: {
+  item: {
     type: String,
   },
+  currency:{
+    type: Number,
+    min: 0,
+    default: 100,
+  }
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

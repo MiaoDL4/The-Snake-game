@@ -19,7 +19,11 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  profile: { type: Schema.Types.ObjectId, ref: "Profile" },
+  profile: { 
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "Profile",
+  },
 });
 
 userSchema.pre("save", async function (next) {

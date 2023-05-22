@@ -20,7 +20,13 @@ const typeDefs = gql`
     win: Int
     loss: Int
     currency: Int
-    item: Product
+    item: [Purchase]
+  }
+  
+  type Purchase {
+    _id: ID
+    purchaseDate: String
+    products: [Product]
   }
 
   type User {

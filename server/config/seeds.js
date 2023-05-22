@@ -4,7 +4,10 @@ const { User, Profile, Product, Category } = require("../models");
 db.once("open", async () => {
   await Category.deleteMany();
 
-  const categories = await Category.insertMany([{ name: "Cosmetic" }]);
+  const categories = await Category.insertMany([
+    { name: "snake" },
+    { name: "board" },
+  ]);
 
   console.log("categories seeded");
 
@@ -14,16 +17,16 @@ db.once("open", async () => {
     {
       name: "purple snakes",
       description: "change the colour of snake to purple",
-      image: "",
+      image: "2",
+      price: 10,
       category: categories[0]._id,
-      price: 1,
     },
     {
       name: "Night Grid",
       description: "Dark background",
-      image: "",
+      image: "1",
+      price: 10,
       category: categories[0]._id,
-      price: 1,
     },
   ]);
 
@@ -36,15 +39,17 @@ db.once("open", async () => {
       win: 0,
       loss: 0,
       currency: 100,
-      item: [{ products: [products[0]._id] }],
+      item: [{ product: [products[0]._id , products[1]._id] }],
     },
     {
       win: 0,
       loss: 0,
       currency: 100,
-      item: [{ products: [products[1]._id] }],
+      item: [{ product: [products[1]._id] }],
     },
   ]);
+
+  console.log("profiles seeded");
 
   await User.deleteMany();
 
@@ -53,25 +58,25 @@ db.once("open", async () => {
       username: "one",
       email: "one@one.com",
       password: "11111",
-      profile: profiles[0],_id,
+      profile: profiles[0]._id,
     },
     {
       username: "two",
       email: "two@two.com",
       password: "22222",
-      profile: profiles[0],_id,
+      profile: profiles[0]._id,
     },
     {
       username: "three",
       email: "three@three.com",
       password: "33333",
-      profile: profiles[1],_id,
+      profile: profiles[1]._id,
     },
     {
       username: "four",
       email: "four@four.com",
       password: "44444",
-      profile: profiles[1],_id,
+      profile: profiles[1]._id,
     },
   ]);
 

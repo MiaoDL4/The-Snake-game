@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
+const Purchase = require("./Purchase");
 
 const profileSchema = new Schema({
   win: {
@@ -13,14 +14,12 @@ const profileSchema = new Schema({
     min: 0,
     default: 0,
   },
-  item: {
-    type: String,
-  },
-  currency:{
+  item: [Purchase.schema],
+  currency: {
     type: Number,
     min: 0,
     default: 100,
-  }
+  },
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

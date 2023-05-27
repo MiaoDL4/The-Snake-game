@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Profile, Product, Category, Purchase } = require("../models");
+const { User, Profile, Product, Category, Purchases } = require("../models");
 
 db.once("open", async () => {
   await Category.deleteMany();
@@ -10,6 +10,7 @@ db.once("open", async () => {
   ]);
 
   console.log("categories seeded");
+  console.log(categories)
 
   await Product.deleteMany();
 
@@ -34,28 +35,28 @@ db.once("open", async () => {
 
   console.log(products)
 
-  await Purchase.deleteMany();
-  const purchased = await Purchase.insertMany([
+  await Purchases.deleteMany();
+  const purchases = await Purchases.insertMany([
     {
-      products:products[0]._id,
+      product:products[0]._id,
     },
     {
-      products:products[1]._id,
+      product:products[1]._id,
     },
     {
-      products:products[1]._id,
+      product:products[1]._id,
     },
     {
-      products:products[1]._id,
+      product:products[1]._id,
     },
     {
-      products:products[1]._id,
+      product:products[1]._id,
     }
   ]);
   
-  console.log("purchased seeded");
+  console.log("purchases seeded");
 
-  console.log(purchased)
+  console.log(purchases)
 
   await Profile.deleteMany();
 
@@ -63,30 +64,32 @@ db.once("open", async () => {
     {
       win:10,
       loss: 5,
-      purchased: [purchased[0]._id, purchased[4]._id],
+      purchases: [purchases[0]._id, purchases[4]._id],
 
     },
     {
       win: 5,
       loss: 6,
       currency: 10,
-      purchased: [purchased[1]._id],
+      purchases: [purchases[1]._id],
     },
     {
       win: 1,
       loss: 2,
       currency: 50,
-      purchased: [purchased[2]._id],
+      purchases: [purchases[2]._id],
     },
     {
       win: 0,
       loss: 1,
       currency: 150,
-      purchased: [purchased[3]._id],
+      purchases: [purchases[3]._id],
     },
   ]);
 
   console.log("profiles seeded");
+
+  console.log(profiles)
   
   await User.deleteMany();
 

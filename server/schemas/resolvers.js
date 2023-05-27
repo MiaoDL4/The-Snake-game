@@ -1,27 +1,27 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User , Profile , Product , Category ,Purchase } = require('../models');
+const { User , Profile , Product , Category , Purchases } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     profile: async ()=>{// DELETE this is a test
-      return await Profile.find().populate('purchased').populate({path:'purchased', populate:'products'});
+      return await Profile.find().populate('purchases').populate({path:'purchases', populate:'product'});
     },
     product: async ()=> {
       return await Product.find().populate('category');
     },
-    purchases: async ()=> {
-      return await Purchase.find().populate('products');
+    purchases: async () => {
+      return await Purchases.find().populate('product');
     },
     users: async () => {
-      return User.find().populate('profile').populate({path:'profile.purchased', populate:'products'});
+      return User.find().populate('profile').populate({path:'profile.purchases', populate:'products'});
     },
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('profile').populate({path:'profile', populate:'purchased'}).populate({path:'profile.purchased', populate:'products'});
+        return User.findOne({ _id: context.user._id }).populate('profile').populate({path:'profile', populate:'purchases'}).populate({path:'profile.purchases', populate:'products'});
       }
       throw new AuthenticationError('You need to be logged in!');
     },

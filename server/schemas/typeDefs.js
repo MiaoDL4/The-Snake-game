@@ -14,19 +14,19 @@ const typeDefs = gql`
     price: Float
     category: Category
   }
+  
+  type Purchase {
+    _id: ID
+    purchaseDate: String
+    products: Product
+  }
 
   type Profile {
     _id: ID
     win: Int
     loss: Int
     currency: Int
-    item: [Purchase]
-  }
-  
-  type Purchase {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
+    purchased: [Purchase]
   }
 
   type User {
@@ -43,12 +43,17 @@ const typeDefs = gql`
   }
 
   type Query {
+    profile: [Profile]
+    product: [Product]
     users: [User]
     user(username: String!): User
     me: User
+    purchases: [Purchase]
   }
 
   type Mutation {
+
+    
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
   }

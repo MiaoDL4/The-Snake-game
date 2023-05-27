@@ -14,12 +14,12 @@ const profileSchema = new Schema({
     min: 0,
     default: 0,
   },
-  item: [Purchase.schema],
   currency: {
     type: Number,
     min: 0,
     default: 100,
   },
+  purchased: [Purchase.schema],
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

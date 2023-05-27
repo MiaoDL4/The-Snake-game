@@ -37,7 +37,6 @@ const Solo = () => {
       case 37:
         if ((direction === DIRECTIONS[39])) break;
         setDirection(DIRECTIONS[keyCode]);
-        
         break;
       case 38:
         if ((direction === DIRECTIONS[40])) break;

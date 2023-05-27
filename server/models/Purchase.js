@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -7,14 +7,12 @@ const purchaseSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    },
-  ],
+  products: [{
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+  }],
 });
 
-const Purchase = mongoose.model('Order', purchaseSchema);
+const Purchase = mongoose.model("Purchase", purchaseSchema);
 
 module.exports = Purchase;

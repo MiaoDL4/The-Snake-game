@@ -1,33 +1,42 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User , Profile , Product , Category , Purchases } = require('../models');
+const { User , Merch , Item } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    profile: async ()=>{// DELETE this is a test
-      return await Profile.find().populate('purchases').populate({path:'purchases', populate:'product'});
-    },
-    product: async ()=> {
-      return await Product.find().populate('category');
-    },
-    purchases: async () => {
-      return await Purchases.find().populate('product');
-    },
     users: async () => {
-      return User.find().populate('profile').populate({path:'profile.purchases', populate:'products'});
+      return User.find().populate("inventory").populate({path:"inventory", populate:"merch"});
     },
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('profile').populate({path:'profile', populate:'purchases'}).populate({path:'profile.purchases', populate:'products'});
+        const user = User.findOne({ _id: context.user._id }).populate("inventory").populate({path:"inventory", populate:"merch"});
+        return user;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    merch: async() => {
+      return Merch.find();
+    }
+    
   },
 
   Mutation: {
+    addItem: async (parent, { merch }, context) => {
+      if (context.user) {
+        const item = new Item({ merch });
+        await User.findByIdAndUpdate(context.user._id, { $push: { inventory: item } });
+
+        return item;
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+
+
+
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);

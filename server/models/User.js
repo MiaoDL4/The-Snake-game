@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const { Schema, model} = mongoose;
 
+const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
+
+const Item = require("./Item");
 
 const userSchema = new Schema({
   username: {
@@ -21,11 +23,20 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  profile: { 
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Profile",
+  wins: {
+    type: Number,
+    default: 0,
   },
+  losses: {
+    type: Number,
+    default: 0,
+  },
+  currecy: {
+    type: Number,
+    default: 100,
+    min: 0,
+  },
+  inventory: [Item.schema],
 });
 
 userSchema.pre("save", async function (next) {
@@ -38,7 +49,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
 const User = model("User", userSchema);

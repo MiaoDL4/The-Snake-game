@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import Solo from "./pages/snake/solo";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+//import Store from "./pages/Store";
 
 
 // Construct our main GraphQL API endpoint
@@ -55,6 +56,7 @@ function App() {
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/solo" element={<Solo />} />
+             
             </Routes>
           </div>
           <Footer />

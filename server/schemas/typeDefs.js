@@ -12,7 +12,8 @@ const typeDefs = gql`
 
   type Item {
     _id: ID
-    merch: [Merch]
+    purchaseDate: String
+    merch: Merch
   }
 
   type User {
@@ -42,6 +43,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addItem(merch: [ID]!): Item
+    updateScore(wins: Int!, losses: Int!): User
   }
 `;
 

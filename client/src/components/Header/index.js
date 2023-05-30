@@ -18,6 +18,8 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/">The Snake Game</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/solo">play solo</Nav.Link>
+          <Nav.Link as={Link} to="/vs">play vs</Nav.Link>
         </Nav>
         <div>
           {Auth.loggedIn() ? (

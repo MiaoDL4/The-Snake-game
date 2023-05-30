@@ -75,7 +75,7 @@ db.once("open", async () => {
       password: "44444",
       inventory: [
         {
-          merch: [merch[0]._id,merch[0]._id, merch[1]._id]
+          merch: merch[0]._id
         }
       ]
     },

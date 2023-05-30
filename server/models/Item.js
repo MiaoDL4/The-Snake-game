@@ -7,12 +7,11 @@ const itemSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  merch: [
+  merch:
     {
       type: Schema.Types.ObjectId,
       ref: "Merch",
     },
-  ],
 });
 
 const Item = mongoose.model("Item", itemSchema);

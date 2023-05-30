@@ -51,7 +51,6 @@ const Solo = () => {
         setDirection(DIRECTIONS[keyCode]);
         break;
       default:
-
     }
   };
 

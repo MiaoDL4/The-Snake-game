@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./assets/style.css";
 import { useInterval } from "./useInterval.js";
 import {
   CANVAS_SIZE,
   SNAKE_START,
-  APPLE_START,
+  FOOD_START,
   SCALE,
   SPEED,
   DIRECTIONS,
@@ -20,7 +19,7 @@ const Solo = () => {
   //game over conditons 1 hitting boarder 2 hitting self
   const canvasRef = useRef();
   const [snake, setSnake] = useState(SNAKE_START);
-  const [apple, setApple] = useState(APPLE_START);
+  const [food, setFood] = useState(FOOD_START);
   const [direction, setDirection] = useState([0, -1]);
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameOver] = useState(false);
@@ -54,8 +53,8 @@ const Solo = () => {
     }
   };
 
-  const createApple = () =>
-    apple.map((_a, i) => Math.floor(Math.random() * (CANVAS_SIZE[i] / SCALE)));
+  const createFood = () =>
+    food.map((_a, i) => Math.floor(Math.random() * (CANVAS_SIZE[i] / SCALE)));
 
   const checkCollision = (piece, snk = snake) => {
     if (
@@ -72,13 +71,13 @@ const Solo = () => {
     return false;
   };
 
-  const checkAppleCollision = (newSnake) => {
-    if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
-      let newApple = createApple();
-      while (checkCollision(newApple, newSnake)) {
-        newApple = createApple();
+  const checkFoodCollision = (newSnake) => {
+    if (newSnake[0][0] === food[0] && newSnake[0][1] === food[1]) {
+      let newFood = createFood();
+      while (checkCollision(newFood, newSnake)) {
+        newFood = createFood();
       }
-      setApple(newApple);
+      setFood(newFood);
       return true;
     }
     return false;
@@ -91,8 +90,11 @@ const Solo = () => {
       snakeCopy[0][1] + direction[1],
     ];
     snakeCopy.unshift(newSnakeHead);
-    if (checkCollision(newSnakeHead)) endGame();
-    if (!checkAppleCollision(snakeCopy)) {
+    if (checkCollision(newSnakeHead)){
+      
+      endGame()
+    } ;
+    if (!checkFoodCollision(snakeCopy)) {
       snakeCopy.pop();
     } else {
       for (let i = 0; i <= GROWTH; i++) {
@@ -104,7 +106,7 @@ const Solo = () => {
 
   const gameStart = () => {
     setSnake(SNAKE_START);
-    setApple(APPLE_START);
+    setFood(FOOD_START);
     setDirection(DIRECTIONS[38]);
     setSpeed(SPEED);
     setGameOver(false);
@@ -117,13 +119,14 @@ const Solo = () => {
     context.fillStyle = "pink";
     snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
     context.fillStyle = "lightblue";
-    context.fillRect(apple[0], apple[1], 1, 1);
-  }, [snake, apple, gameOver]);
+    context.fillRect(food[0], food[1], 1, 1);
+  }, [snake, food, gameOver]);
 
   return (
     <>
       <div role="button" tabIndex="0" onKeyDown={(e) => movement(e)}>
         <canvas
+          style={{borderstyle: "solid"}}
           ref={canvasRef}
           width={`${CANVAS_SIZE[0]}px`}
           height={`${CANVAS_SIZE[1]}px`}

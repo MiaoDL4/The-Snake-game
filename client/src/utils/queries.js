@@ -1,16 +1,25 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_MERCH = gql`
-  query Merch {
-    merch {
-      _id
-      name
-      description
-      image
-      price
+query Query {
+  me {
+    _id
+    username
+    inventory {
+      merch {
+        _id
+      }
     }
   }
-`;
+  merch {
+    _id
+    name
+    description
+    image
+    price
+    modifier
+  }
+}`;
 
 export const QUERY_SCORE = gql`
 query currentScore {

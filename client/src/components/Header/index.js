@@ -20,6 +20,7 @@ const Header = () => {
           <Nav.Link as={Link} to="/">Home</Nav.Link>
           <Nav.Link as={Link} to="/solo">play solo</Nav.Link>
           <Nav.Link as={Link} to="/vs">play vs</Nav.Link>
+          <Nav.Link as={Link} to="/shop">shop</Nav.Link>
         </Nav>
         <div>
           {Auth.loggedIn() ? (

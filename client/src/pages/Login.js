@@ -4,6 +4,7 @@ import { LOGIN_USER } from '../utils/mutations';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import { Link } from 'react-router-dom';
 
 import Auth from '../utils/auth';
 
@@ -30,7 +31,7 @@ const Login = (props) => {
         variables: { ...formState },
       });
 
-      Auth.login(data.login.token);
+      Auth.login(data.login.token); // takes back to home page
     } catch (e) {
       console.error(e);
     }
@@ -44,6 +45,7 @@ const Login = (props) => {
 
   return (
     <>
+    <h1>please log in...</h1>
       <Form onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -57,6 +59,9 @@ const Login = (props) => {
           Submit
         </Button>
       </Form>
+      <Button as={Link} variant='secondary' className="m-2" to="/signup">
+                Signup
+              </Button>
 
       {error && (
         <Alert variant='danger'>

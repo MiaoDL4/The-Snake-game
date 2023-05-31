@@ -126,7 +126,7 @@ const Solo = () => {
     <>
       <div role="button" tabIndex="0" onKeyDown={(e) => movement(e)}>
         <canvas
-          style={{borderstyle: "solid"}}
+          style={{border: "1px solid black"}}
           ref={canvasRef}
           width={`${CANVAS_SIZE[0]}px`}
           height={`${CANVAS_SIZE[1]}px`}

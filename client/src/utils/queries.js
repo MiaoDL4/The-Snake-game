@@ -5,6 +5,7 @@ query Query {
   me {
     _id
     username
+    currecy
     inventory {
       merch {
         _id

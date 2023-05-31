@@ -1,8 +1,9 @@
 import React from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 
@@ -36,23 +37,35 @@ const Profile = () => {
   }
 
   return (
-    <Card style={{ width: "20rem" }}>
-      <Card.Header>User Details</Card.Header>
-      <ListGroup variant="flush">
-        <ListGroup.Item>Username: {user.username}</ListGroup.Item>
-        <ListGroup.Item>wins: {user.wins}</ListGroup.Item>
-        <ListGroup.Item>losses: {user.losses}</ListGroup.Item>
-        <ListGroup.Item>currency: {user.currecy}</ListGroup.Item>
-        {user.inventory.map((item) => (
-          <ListGroup.Item>
-            <div>purchase date: {item.purchaseDate}</div>
-            <div>name: {item.merch.name}</div>
-            <div>description: {item.merch.description}</div>
-            <div>image: {item.merch.image}</div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Card>
+    <>
+      <Container>
+        <Row>
+          <Col>Username: {user.username}</Col>
+        </Row>
+        <Row>
+          <Col>wins: {user.wins}</Col>
+          <Col>losses: {user.losses}</Col>
+        </Row>
+        <Row>
+          <Col>
+          inventory
+          </Col>
+          <Col>
+          currency: {user.currecy}
+          </Col>
+        </Row>
+        <Row>
+          {user.inventory.map((item) => (
+            <Col>
+              <div>purchase date: {item.purchaseDate}</div>
+              <div>name: {item.merch.name}</div>
+              <div>description: {item.merch.description}</div>
+              <div>image: {item.merch.image}</div>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </>
   );
 };
 

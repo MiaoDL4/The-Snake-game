@@ -5,7 +5,7 @@ query Query {
   me {
     _id
     username
-    currecy
+    currency
     inventory {
       merch {
         _id
@@ -50,7 +50,7 @@ export const QUERY_ME = gql`
       email
       wins
       losses
-      currecy
+      currency
       inventory {
         _id
         purchaseDate

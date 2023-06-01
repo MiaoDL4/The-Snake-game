@@ -23,7 +23,7 @@ const typeDefs = gql`
     password: String
     wins: Int
     losses: Int
-    currecy: Int
+    currency: Int
     inventory: [Item]
   }
 

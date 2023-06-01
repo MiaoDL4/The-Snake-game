@@ -31,7 +31,7 @@ const Shop = () => {
         return !existing;
       });
       setState(filteredItems);
-      setCurrency(user.currecy);
+      setCurrency(user.currency);
     }
   }, [user]);
 

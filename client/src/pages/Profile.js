@@ -88,7 +88,7 @@ const Profile = () => {
               </Card.Header>
               <Card.Body>
                 <Card.Title className="pb-1">
-                  <h5>Currency: {user.currecy}</h5>
+                  <h5>Currency: {user.currency}</h5>
                 </Card.Title>
                 <Row>
                   {user.inventory.map((item) => (

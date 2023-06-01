@@ -51,10 +51,9 @@ const Profile = () => {
     localStorage.setItem("themeSnake", JSON.stringify(selected));
     setShowAlert(true);
   };
-  const alertButton = () =>{
+  const alertButton = () => {
     setShowAlert(false);
-  }
-
+  };
 
   return (
     <>
@@ -177,9 +176,9 @@ const Profile = () => {
         variant="success"
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
- <strong>Theme Changed</strong>
+        <strong>Theme Changed</strong>
 
-        <button class="btn-close"  aria-label="Close" onClick={alertButton}></button>
+        <button aria-label="Close" onClick={alertButton}></button>
       </Alert>
     </>
   );

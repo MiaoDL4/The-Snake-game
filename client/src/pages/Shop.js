@@ -60,6 +60,7 @@ const Shop = () => {
         (FilteredItem) => FilteredItem._id !== ID
       );
       const newCurrency = currency - selected.price;
+      console.log(newCurrency)
       try {
         const { data } = await addItem({
           variables: { merch: ID, currency: newCurrency },
@@ -67,9 +68,9 @@ const Shop = () => {
       } catch (err) {
         console.error(err);
       }
-      setCurrency(newCurrency);
       setState(updateItems);
-      setshowSucessAlert(true)
+      setCurrency(newCurrency);
+      setshowSucessAlert(true);
     } else {
       setshowDangerAlert(true);
     }
@@ -157,6 +158,7 @@ const Shop = () => {
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
         Not enough currency
+        <button aria-label="Close" onClick={alertButton}></button>
       </Alert>
       <Alert
         show={showSuccessAlert}
@@ -164,6 +166,7 @@ const Shop = () => {
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
         Item purchased
+        <button aria-label="Close" onClick={alertButton}></button>
       </Alert>
     </>
   );

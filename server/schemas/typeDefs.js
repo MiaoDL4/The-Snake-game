@@ -5,9 +5,10 @@ const typeDefs = gql`
     _id: ID
     name: String
     description: String
-    image: String
-    price: Float
-    modifier: String
+    price: Int
+    modifierSnake: String
+    modifierBoard: String
+    modifierFood: String
   }
 
   type Item {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInterval } from "./useInterval.js";
 
-import Form from "react-bootstrap/Form";
+//import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
@@ -32,6 +32,8 @@ const Solo = () => {
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
+  const theme = JSON.parse(localStorage.getItem('themeSnake'));
+  
   useInterval(() => gameLoop(), speed);
 
   const endGame = () => {
@@ -123,9 +125,9 @@ const Solo = () => {
     const context = canvasRef.current.getContext("2d");
     context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    context.fillStyle = "pink";
+    context.fillStyle = theme.merch.modifierSnake;
     snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
-    context.fillStyle = "lightblue";
+    context.fillStyle = theme.merch.modifierFood;
     context.fillRect(food[0], food[1], 1, 1);
   }, [snake, food, gameOver]);
 
@@ -137,7 +139,7 @@ const Solo = () => {
             <canvas
               role="button"
               className="border-primary"
-              style={{ border: "1px solid black" }}
+              style={{ border: "1px solid black" , backgroundColor: theme.merch.modifierBoard}}
               ref={canvasRef}
               width={`${CANVAS_SIZE[0]}px`}
               height={`${CANVAS_SIZE[1]}px`}

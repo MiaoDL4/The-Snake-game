@@ -14,7 +14,7 @@ const Play = () => {
           as={Link}
           to="/Solo"
         >
-          <h1 className="">Solo</h1>
+          <h1 className="">solo</h1>
         </Col>
         <Col
           className="bg-warning d-flex justify-content-center align-items-center mx-5 rounded-4"

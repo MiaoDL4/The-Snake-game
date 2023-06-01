@@ -5,12 +5,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
 const Profile = () => {
+
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -18,8 +20,7 @@ const Profile = () => {
   });
 
   const user = data?.me || data?.user || {};
-  console.log(user);
-  // navigate to personal profile page if username is yours
+
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
   }
@@ -36,6 +37,16 @@ const Profile = () => {
       </h4>
     );
   }
+  if (!user) {
+    return <h4>loading...</h4>;
+  }
+
+  const handleButtonSubmit = async (e) => {
+    e.preventDefault();
+    const ID = e.target.value;
+    const selected = user.inventory.find((seletedTheme) => seletedTheme.merch._id === ID);
+    localStorage.setItem('themeSnake', JSON.stringify(selected));
+  };
 
   return (
     <>
@@ -44,11 +55,11 @@ const Profile = () => {
           <Col className="text-center">
             <Card className="bg-primary rounded-4">
               <Card.Header>
-                <h4>Username</h4>
+                <h3>Username</h3>
               </Card.Header>
               <Card.Body>
                 <Card.Title>
-                  <h2>{user.username}</h2>
+                  <h1>{user.username}</h1>
                 </Card.Title>
               </Card.Body>
             </Card>
@@ -58,7 +69,7 @@ const Profile = () => {
           <Col md={6} sm={12} className="text-center py-2">
             <Card className="bg-primary rounded-4">
               <Card.Header>
-                <h4>Wins</h4>
+                <h3>Wins</h3>
               </Card.Header>
               <Card.Body>
                 <Card.Title>
@@ -70,7 +81,7 @@ const Profile = () => {
           <Col md={6} sm={12} className="text-center py-2">
             <Card className="bg-primary rounded-4">
               <Card.Header>
-                <h4>Losses</h4>
+                <h3>Losses</h3>
               </Card.Header>
               <Card.Body>
                 <Card.Title>
@@ -84,18 +95,57 @@ const Profile = () => {
           <Col>
             <Card className="bg-primary rounded-4">
               <Card.Header>
-                <h4 className="text-start">Inventory</h4>
+                <h3 className="text-start">Inventory</h3>
               </Card.Header>
               <Card.Body>
                 <Card.Title className="pb-1">
                   <h5>Currency: {user.currency}</h5>
                 </Card.Title>
-                <Row>
+                <Row className="text-center">
                   {user.inventory.map((item) => (
                     <Col md={4} sm={12} className="">
                       <ul className="bg-info py-2 px-2 rounded-3">
-                        <dt>{item.merch.name}</dt>
-                        <dd>Description: {item.merch.description}</dd>
+                        <dt><h5>{item.merch.name}</h5></dt>
+                        <Row>
+                          <Col>
+                            <h6>theme colours</h6>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <div
+                              className="rounded-3"
+                              style={{
+                                backgroundColor: item.merch.modifierSnake,
+                              }}
+                            >
+                              Snake
+                            </div>
+                          </Col>
+                          <Col>
+                            <div
+                              className="rounded-3"
+                              style={{
+                                backgroundColor: item.merch.modifierBoard,
+                              }}
+                            >
+                              Board
+                            </div>
+                          </Col>
+                          <Col>
+                            <div
+                              className="rounded-3"
+                              style={{
+                                backgroundColor: item.merch.modifierFood,
+                              }}
+                            >
+                              Food
+                            </div>
+                          </Col>
+                        </Row>
+                        <Button                         variant="secondary"
+                        value={item.merch._id}
+                        onClick={handleButtonSubmit}>Select Theme</Button>
                       </ul>
                     </Col>
                   ))}

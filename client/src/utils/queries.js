@@ -16,9 +16,10 @@ query Query {
     _id
     name
     description
-    image
     price
-    modifier
+    modifierSnake
+    modifierBoard
+    modifierFood
   }
 }`;
 
@@ -58,8 +59,9 @@ export const QUERY_ME = gql`
           _id
           name
           description
-          image
-          modifier
+          modifierSnake
+          modifierBoard
+          modifierFood
         }
       }
     }

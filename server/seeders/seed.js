@@ -6,44 +6,53 @@ db.once("open", async () => {
 
   const merch = await Merch.insertMany([
     {
-      name: "Pale Green Snake",
+      name: "Malachite",
       description: "Change the colour of snake to purple",
       image: "2",
       price: 10,
-      modifierSnake: "palegreen",
+      modifierSnake: "#1afe49",
+      modifierBoard: "#041348",
+      modifierFood: "#de004e", //laser
     },
     {
-      name: "Orange Red Snake",
+      name: "Aureolin",
       description: "Change the colour of snake to Orange Red",
       price: 10,
-      modifierSnake: "orangered",
+      modifierSnake: "#FCEE0C",
+      modifierBoard: "#000000",
+      modifierFood: "#03D8F3", //cyberpunk game
     },
     {
-      name: "Cyan Snake",
+      name: "Halo",
       description: "Change the colour of snake to Cyan",
       price: 10,
-      modifierSnake: "cyan",
+      modifierSnake: "#b7c1de",
+      modifierBoard: "#092047",
+      modifierFood: "#63345e", //halo
     },
     {
-      name: "Midnight Blue Board",
+      name: "Vodka",
       description: "Changes the board to Midnight Blue",
       price: 10,
-      modifierBoard: "midnightblue",
-      modifierFood: "silver",
+      modifierSnake: "#c4ffff",
+      modifierBoard: "#1261d1",
+      modifierFood: "#af43be", //2 phase fabric
     },
     {
-      name: "Dark Slate Gray Board",
+      name: "Diamond",
       description: "Changes the board to Dark Slate Gray",
       price: 10,
-      modifierBoard: "darkslategray",
-      modifierFood: "violet",
+      modifierSnake: "#FAC4B8",
+      modifierBoard: "#8f704b",
+      modifierFood: "#44786ea", //desert city
     },
     {
-      name: "Maroon Board",
+      name: "Blueberry",
       description: "Changes the board to Maroon",
       price: 10,
-      modifierBoard: "maroon",
-      modifierFood: "thistle",
+      modifierSnake: "#3E82F7",
+      modifierBoard: "#ff2a6d",
+      modifierFood: "#f2e0df", //red jacket
     },
   ]);
 
@@ -73,9 +82,9 @@ db.once("open", async () => {
       password: "44444",
       inventory: [
         {
-          merch: merch[0]._id
-        }
-      ]
+          merch: merch[0]._id,
+        },
+      ],
     },
   ]);
 

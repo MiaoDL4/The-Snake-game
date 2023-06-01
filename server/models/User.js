@@ -37,6 +37,7 @@ const userSchema = new Schema({
     min: 0,
   },
   inventory: [Item.schema],
+  //theme:
 });
 
 userSchema.pre("save", async function (next) {

@@ -33,7 +33,7 @@ const Shop = () => {
       setState(filteredItems);
       setCurrency(user.currency);
     }
-  }, [user]);
+  }, [data]);
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/store" />;
@@ -56,26 +56,28 @@ const Shop = () => {
     const ID = e.target.value;
     const selected = state.find((seletedItem) => seletedItem._id === ID);
     if (currency > selected.price) {
-      const updateItems = state.filter((FilteredItem) => FilteredItem._id !== ID);
-      const newCurrency = currency-selected.price;
+      const updateItems = state.filter(
+        (FilteredItem) => FilteredItem._id !== ID
+      );
+      const newCurrency = currency - selected.price;
       try {
         const { data } = await addItem({
-          variables: { merch: ID, currency: newCurrency},
+          variables: { merch: ID, currency: newCurrency },
         });
       } catch (err) {
         console.error(err);
       }
-      setCurrency(newCurrency)
+      setCurrency(newCurrency);
       setState(updateItems);
-    } else{
+    } else {
       setshowDangerAlert(!showDangerAlert);
     }
   };
 
   if (!state) {
     return <h4>loading...</h4>;
-  }
-  console.log(state);
+  };
+
   return (
     <>
       <Container className="py-5">
@@ -84,13 +86,41 @@ const Shop = () => {
             <Col md={4} sm={12} className="py-2 h-100">
               <Card className="bg-primary rounded-4">
                 <Card.Header>
-                  <h2>{item.name}</h2>
+                  <h2>{item.name} Theme</h2>
                 </Card.Header>
                 <Card.Body>
                   <Card.Title className="pb-1">
-                    {item.description}
+                    <Col>
+                      <div
+                        className="rounded-3"
+                        style={{
+                          backgroundColor: item.modifierSnake,
+                        }}
+                      >
+                        Snake
+                      </div>
+                    </Col>
+                    <Col>
+                      <div
+                        className="rounded-3"
+                        style={{
+                          backgroundColor: item.modifierBoard,
+                        }}
+                      >
+                        Board
+                      </div>
+                    </Col>
+                    <Col>
+                      <div
+                        className="rounded-3"
+                        style={{
+                          backgroundColor: item.modifierFood,
+                        }}
+                      >
+                        Food
+                      </div>
+                    </Col>
                   </Card.Title>
-                  <Card.Text>Price: {item.price}</Card.Text>
                   <Row>
                     <Col className="d-flex flex-row-reverse px-3">
                       <Button
@@ -98,7 +128,7 @@ const Shop = () => {
                         value={item._id}
                         onClick={handleButtonSubmit}
                       >
-                        Purchase
+                        Purchase for {item.price}
                       </Button>
                     </Col>
                   </Row>

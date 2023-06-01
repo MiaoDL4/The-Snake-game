@@ -4,17 +4,17 @@
 Welcome to my Snake game! do you all remember the OLD game on your nokia well if you dont here the [Wiki link](https://en.wikipedia.org/wiki/Snake_(video_game_genre))
 
 ## Usage
-fundamental all you have to do is play!
-additional thing
-  -you can "purchase" themes and apply them in your game play
+fundamental all you have to do is play!<br />
+additional thing<br />
+  -you can "purchase" themes and apply them in your game play<br />
 it's been deployed at https://rocky-temple-37557.herokuapp.com/ for the time being.
 
 
 ## installation
-git clone https://github.com/MDL4/The-Snake-game.git
-open in code editor like Visual Studio Code
-install the dependences "npm run install"
-then to launch locally "npm run develop"
+git clone https://github.com/MDL4/The-Snake-game.git<br />
+open in code editor like Visual Studio Code<br />
+install the dependences "npm run install"<br />
+then to launch locally "npm run develop"<br />
 
 
 ## technologies

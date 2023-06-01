@@ -88,13 +88,13 @@ const Shop = () => {
   return (
     <>
       <Container className="py-5">
-        <Row>
+        {/* <Row>
           <Col className="pb-2">
             <Card className="bg-primary rounded-4 text-center pt-2">
               <h2> Currency: {user.currency}</h2>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           {state.map((item) => (
             <Col md={4} sm={12} className="py-2 h-100">

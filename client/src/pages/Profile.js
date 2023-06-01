@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Container from "react-bootstrap/Container";
@@ -6,12 +6,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
 const Profile = () => {
+  const [showAlert, setShowAlert] = useState(false);
 
   const { username: userParam } = useParams();
 
@@ -41,19 +43,25 @@ const Profile = () => {
     return <h4>loading...</h4>;
   }
 
-  const handleButtonSubmit = async (e) => {
-    e.preventDefault();
+  const handleButton = async (e) => {
     const ID = e.target.value;
-    const selected = user.inventory.find((seletedTheme) => seletedTheme.merch._id === ID);
-    localStorage.setItem('themeSnake', JSON.stringify(selected));
+    const selected = user.inventory.find(
+      (seletedTheme) => seletedTheme.merch._id === ID
+    );
+    localStorage.setItem("themeSnake", JSON.stringify(selected));
+    setShowAlert(true);
   };
+  const alertButton = () =>{
+    setShowAlert(false);
+  }
+
 
   return (
     <>
       <Container className="py-5">
         <Row className="pb-2">
           <Col className="text-center">
-            <Card className="bg-primary rounded-4">
+            <Card className="bg-dark border-primary rounded-4">
               <Card.Header>
                 <h3>Username</h3>
               </Card.Header>
@@ -67,7 +75,7 @@ const Profile = () => {
         </Row>
         <Row className="">
           <Col md={6} sm={12} className="text-center py-2">
-            <Card className="bg-primary rounded-4">
+            <Card className="bg-dark border-primary rounded-4">
               <Card.Header>
                 <h3>Wins</h3>
               </Card.Header>
@@ -79,7 +87,7 @@ const Profile = () => {
             </Card>
           </Col>
           <Col md={6} sm={12} className="text-center py-2">
-            <Card className="bg-primary rounded-4">
+            <Card className="bg-dark border-primary rounded-4">
               <Card.Header>
                 <h3>Losses</h3>
               </Card.Header>
@@ -93,7 +101,7 @@ const Profile = () => {
         </Row>
         <Row className="py-2">
           <Col>
-            <Card className="bg-primary rounded-4">
+            <Card className="bg-dark border-primary rounded-4">
               <Card.Header>
                 <h3 className="text-start">Inventory</h3>
               </Card.Header>
@@ -101,17 +109,19 @@ const Profile = () => {
                 <Card.Title className="pb-1">
                   <h5>Currency: {user.currency}</h5>
                 </Card.Title>
-                <Row className="text-center">
+                <Row className="text-center ">
                   {user.inventory.map((item) => (
                     <Col md={4} sm={12} className="">
-                      <ul className="bg-info py-2 px-2 rounded-3">
-                        <dt><h5>{item.merch.name}</h5></dt>
+                      <Card className="py-2 px-2 rounded-3 border-info">
+                        <dt>
+                          <h5>{item.merch.name}</h5>
+                        </dt>
                         <Row>
                           <Col>
                             <h6>theme colours</h6>
                           </Col>
                         </Row>
-                        <Row>
+                        <Row className="pb-3">
                           <Col>
                             <div
                               className="rounded-3"
@@ -143,10 +153,17 @@ const Profile = () => {
                             </div>
                           </Col>
                         </Row>
-                        <Button                         variant="secondary"
-                        value={item.merch._id}
-                        onClick={handleButtonSubmit}>Select Theme</Button>
-                      </ul>
+                        <Row className="d-flex flex-row-reverse">
+                          <Button
+                            className="mb-3 mx-3 w-50 "
+                            variant="outline-secondary"
+                            value={item.merch._id}
+                            onClick={handleButton}
+                          >
+                            Select Theme
+                          </Button>
+                        </Row>
+                      </Card>
                     </Col>
                   ))}
                 </Row>
@@ -155,6 +172,15 @@ const Profile = () => {
           </Col>
         </Row>
       </Container>
+      <Alert
+        show={showAlert}
+        variant="success"
+        className="text-center position-absolute top-50 start-50 translate-middle"
+      >
+ <strong>Theme Changed</strong>
+
+        <button class="btn-close"  aria-label="Close" onClick={alertButton}></button>
+      </Alert>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInterval } from "./useInterval.js";
 
+
 //import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -31,6 +32,7 @@ const Solo = () => {
   const [direction, setDirection] = useState([0, -1]);
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0)
 
   const theme = JSON.parse(localStorage.getItem('themeSnake'));
   
@@ -106,6 +108,8 @@ const Solo = () => {
     if (!checkFoodCollision(snakeCopy)) {
       snakeCopy.pop();
     } else {
+      let currentScore = score
+      setScore(currentScore + 1);
       for (let i = 0; i <= GROWTH; i++) {
         snakeCopy.push(snakeCopy[snakeCopy.length - 1]);
       }
@@ -118,6 +122,7 @@ const Solo = () => {
     setFood(FOOD_START);
     setDirection(DIRECTIONS[38]);
     setSpeed(SPEED);
+    setScore(0)
     setGameOver(false);
   };
 

@@ -4,13 +4,13 @@ import { LOGIN_USER } from "../utils/mutations";
 
 import { Link } from "react-router-dom";
 
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
 
 import Auth from "../utils/auth";
 
@@ -55,26 +55,20 @@ const Login = (props) => {
         <>
           <Container style={{ height: "75dvh" }} className="d-flex flex-column">
             <Row className="h-100 py-5 ">
-              <Col
-                className="bg-info d-flex justify-content-center align-items-center mx-2 rounded-4"
-                as={Link}
-                to="/me"
-              >
-                <h1 className="">Proflie</h1>
+              <Col md={4} sm={12} as={Link} to="/me" className="my-2">
+                <Button variant="outline-info" className="d-flex justify-content-center align-items-center mx-2 rounded-4 h-100 w-100">
+                  <h1>Proflie</h1>
+                </Button>
               </Col>
-              <Col
-                className="bg-danger d-flex justify-content-center align-items-center mx-2 rounded-4"
-                as={Link}
-                to="/play"
-              >
-                <h1 className="">Play</h1>
+              <Col md={4} sm={12} as={Link} to="/play" className="my-2">
+                <Button variant="outline-danger" className="d-flex justify-content-center align-items-center mx-2 rounded-4 h-100 w-100">
+                  <h1>Play</h1>
+                </Button>
               </Col>
-              <Col
-                className="bg-light d-flex justify-content-center align-items-center mx-2 rounded-4"
-                as={Link}
-                to="/shop"
-              >
-                <h1 className="">Shop</h1>
+              <Col md={4} sm={12} as={Link} to="/shop" className="my-2">
+                <Button variant="outline-info" className="d-flex justify-content-center align-items-center mx-2 rounded-4 h-100 w-100">
+                  <h1>Shop</h1>
+                </Button>
               </Col>
             </Row>
           </Container>
@@ -111,21 +105,20 @@ const Login = (props) => {
                     name="password"
                   />
                 </Form.Group>
-                
+
                 <Button variant="outline-secondary" type="submit">
                   Login
                 </Button>
-
               </Form>
-              
+
               <Button
-                  as={Link}
-                  variant="outline-secondary"
-                  className="m-4"
-                  to="/signup"
-                >
-                  Signup
-                </Button>
+                as={Link}
+                variant="outline-secondary"
+                className="m-4"
+                to="/signup"
+              >
+                Signup
+              </Button>
             </Col>
           </Row>
 

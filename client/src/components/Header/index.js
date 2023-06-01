@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <Navbar bg="primary">
+    <Navbar bg="dark">
       <Container>
         <Navbar.Brand as={Link} to="/">
           <h2>The Snake Game</h2>
@@ -24,7 +24,7 @@ const Header = () => {
         <div>
         {location.pathname !== "/" && (
                 <Button
-                  variant="dark"
+                  variant="outline-primary"
                   className="m-2"
                   onClick={() => navigate(-1)}
                 >

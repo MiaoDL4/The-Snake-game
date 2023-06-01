@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const ADD_ITEM = gql`
-  mutation AddItem($merch: String!) {
-    addItem(merch: $merch) {
-      _id
-    }
+
+
+export const UPDATE_CURRENCY = gql`
+mutation Mutation($currency: Int!) {
+  updateCurrency(currency: $currency) {
+    currency
   }
-`;
+}
+`; 
 
 export const PURCHASE_ITEM = gql`
 mutation Mutation($merch: String!, $currency: Int!) {

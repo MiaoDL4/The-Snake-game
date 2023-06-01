@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 const Footer = () => {
 
   return (
-    <footer className="w-100 mt-auto bg-primary p-2 position-absolute bottom-0">
+    <footer className="w-100 mt-auto bg-dark p-2 position-absolute bottom-0">
       <Container className="container text-center mb-2">
         <h4>
           Made with{' '}

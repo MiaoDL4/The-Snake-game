@@ -76,11 +76,18 @@ const Shop = () => {
 
   if (!state) {
     return <h4>loading...</h4>;
-  };
+  }
 
   return (
     <>
       <Container className="py-5">
+        <Row>
+          <Col className="pb-2">
+            <Card className="bg-primary rounded-4 text-center pt-2">
+              <h2> Currency: {user.currency}</h2>
+            </Card>
+          </Col>
+        </Row>
         <Row>
           {state.map((item) => (
             <Col md={4} sm={12} className="py-2 h-100">
@@ -89,7 +96,7 @@ const Shop = () => {
                   <h2>{item.name} Theme</h2>
                 </Card.Header>
                 <Card.Body>
-                  <Card.Title className="pb-1">
+                  <Card.Title className="pb-1 text-center">
                     <Col>
                       <div
                         className="rounded-3"
@@ -121,10 +128,10 @@ const Shop = () => {
                       </div>
                     </Col>
                   </Card.Title>
-                  <Row>
+                  <Row className="d-flex justify-content-center">
                     <Col className="d-flex flex-row-reverse px-3">
                       <Button
-                        variant="secondary"
+                        variant="outline-secondary"
                         value={item._id}
                         onClick={handleButtonSubmit}
                       >

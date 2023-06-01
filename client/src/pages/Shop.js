@@ -19,6 +19,7 @@ const Shop = () => {
   const { loading, data } = useQuery(QUERY_MERCH);
   const [addItem] = useMutation(PURCHASE_ITEM);
   const [showDangerAlert, setshowDangerAlert] = useState(false);
+  const [showSuccessAlert, setshowSucessAlert] = useState(false);
 
   const user = data?.me;
   const userItems = data?.me.inventory;
@@ -54,7 +55,7 @@ const Shop = () => {
   const handleButtonSubmit = async (e) => {
     const ID = e.target.value;
     const selected = state.find((seletedItem) => seletedItem._id === ID);
-    if (currency > selected.price) {
+    if (currency >= selected.price) {
       const updateItems = state.filter(
         (FilteredItem) => FilteredItem._id !== ID
       );
@@ -68,9 +69,15 @@ const Shop = () => {
       }
       setCurrency(newCurrency);
       setState(updateItems);
+      setshowSucessAlert(true)
     } else {
-      setshowDangerAlert(!showDangerAlert);
+      setshowDangerAlert(true);
     }
+  };
+
+  const alertButton = () => {
+    setshowDangerAlert(false);
+    setshowSucessAlert(false);
   };
 
   if (!state) {
@@ -150,6 +157,13 @@ const Shop = () => {
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
         Not enough currency
+      </Alert>
+      <Alert
+        show={showSuccessAlert}
+        variant="success"
+        className="text-center position-absolute top-50 start-50 translate-middle"
+      >
+        Item purchased
       </Alert>
     </>
   );

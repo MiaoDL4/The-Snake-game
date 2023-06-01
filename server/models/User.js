@@ -33,7 +33,7 @@ const userSchema = new Schema({
   },
   currency: {
     type: Number,
-    default: 20,
+    default: 100,
     min: 0,
   },
   inventory: [Item.schema],

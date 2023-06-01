@@ -23,6 +23,10 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
+  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    return <Navigate to="/store" />;
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }

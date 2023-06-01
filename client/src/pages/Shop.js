@@ -32,7 +32,6 @@ const Shop = () => {
         return !existing;
       });
       setState(filteredItems);
-      setCurrency(user.currency);
     }
   }, [data]);
 
@@ -138,6 +137,7 @@ const Shop = () => {
                   <Row>
                     <Col className="d-flex flex-row-reverse px-3">
                       <Button
+                        key={item._id}  
                         variant="outline-secondary"
                         value={item._id}
                         onClick={handleButtonSubmit}

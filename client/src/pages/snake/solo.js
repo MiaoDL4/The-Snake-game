@@ -18,7 +18,9 @@ import {
   SPEED,
   DIRECTIONS,
   GROWTH,
+  DEFAULT
 } from "./constants";
+import { json } from "react-router-dom";
 
 const Solo = () => {
   //grid/play space
@@ -33,9 +35,16 @@ const Solo = () => {
   const [direction, setDirection] = useState([0, -1]);
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState(0);
 
-  const theme = JSON.parse(localStorage.getItem('themeSnake'));
+  localStorage.setItem("default", JSON.stringify(DEFAULT));
+
+  let theme = JSON.parse(localStorage.getItem('themeSnake'));
+
+
+  if(!theme){
+    theme = JSON.parse(localStorage.getItem('default'));
+  }
   
   useInterval(() => gameLoop(), speed);
 

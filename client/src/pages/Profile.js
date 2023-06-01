@@ -109,8 +109,8 @@ const Profile = () => {
                   <h5>Currency: {user.currency}</h5>
                 </Card.Title>
                 <Row className="text-center ">
-                  {user.inventory.map((item) => (
-                    <Col md={4} sm={12} className="">
+                  {user.inventory.map((item, id) => (
+                    <Col md={4} sm={12} className="{id}">
                       <Card className="py-2 px-2 rounded-3 border-info">
                         <dt>
                           <h5>{item.merch.name}</h5>
@@ -154,6 +154,7 @@ const Profile = () => {
                         </Row>
                         <Row className="d-flex flex-row-reverse">
                           <Button
+                            key={item._id}
                             className="mb-3 mx-3 w-50 "
                             variant="outline-secondary"
                             value={item.merch._id}

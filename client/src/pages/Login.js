@@ -50,16 +50,28 @@ const Login = (props) => {
     <>
       {Auth.loggedIn() ? (
         <>
-          <Container>
-            <Row>
-              <Col as={Link} to="/me">
-                Proflie
+          <Container style={{ height: "75dvh" }} className="d-flex flex-column">
+            <Row className="h-100 py-5 ">
+              <Col
+                className="bg-info d-flex justify-content-center align-items-center mx-2 rounded-4"
+                as={Link}
+                to="/me"
+              >
+                <h1 className="">Proflie</h1>
               </Col>
-              <Col as={Link} to="/play">
-                play
+              <Col
+                className="bg-danger d-flex justify-content-center align-items-center mx-2 rounded-4"
+                as={Link}
+                to="/play"
+              >
+                <h1 className="">Play</h1>
               </Col>
-              <Col as={Link} to="/shop">
-                Shop
+              <Col
+                className="bg-light d-flex justify-content-center align-items-center mx-2 rounded-4"
+                as={Link}
+                to="/shop"
+              >
+                <h1 className="">Shop</h1>
               </Col>
             </Row>
           </Container>

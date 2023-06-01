@@ -6,28 +6,28 @@ db.once("open", async () => {
 
   const merch = await Merch.insertMany([
     {
-      name: "purple snakes",
+      name: "Purple snakes",
       description: "change the colour of snake to purple",
       image: "2",
       price: 10,
       modifier: "purple",
     },
     {
-      name: "red snakes",
+      name: "Red snakes",
       description: "change the colour of snake to red",
       image: "2",
       price: 10,
       modifier: "red",
     },
     {
-      name: "green snakes",
+      name: "Green snakes",
       description: "change the colour of snake to green",
       image: "2",
       price: 10,
       modifier: "green",
     },
     {
-      name: "blue",
+      name: "Blue Board",
       description: "Dark background",
       image: "1",
       price: 10,

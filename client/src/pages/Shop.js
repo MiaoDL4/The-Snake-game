@@ -6,6 +6,9 @@ import { ADD_ITEM } from "../utils/mutations";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 import Auth from "../utils/auth";
 
@@ -15,6 +18,7 @@ const Shop = () => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(QUERY_MERCH);
   const [addItem] = useMutation(ADD_ITEM);
+  const [showDangerAlert, setshowDangerAlert] = useState(false);
 
   const user = data?.me;
   const userItems = data?.me.inventory;
@@ -28,8 +32,6 @@ const Shop = () => {
       });
       setState(filteredItems);
       setCurrency(user.currecy);
-      console.log('```````````````````````````')
-      console.log(filteredItems)
     }
   }, [user]);
 
@@ -49,45 +51,64 @@ const Shop = () => {
       </h4>
     );
   }
-
   const handleButtonSubmit = async (e) => {
     e.preventDefault();
     const ID = e.target.value;
-    const updateItems = state.filter((item) => item._id !== ID);
-    setState(updateItems);
-    try {
-      const { data } = await addItem({
-        variables: { merch: ID },
-      });
-    } catch (err) {
-      console.error(err);
+    const selected = state.find((seletedItem) => seletedItem._id === ID);
+    if (currency > selected.price) {
+      const updateItems = state.filter((FilteredItem) => FilteredItem._id !== ID);
+      setState(updateItems);
+      try {
+        const { data } = await addItem({
+          variables: { merch: ID },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    } else{
+      setshowDangerAlert(!showDangerAlert);
     }
   };
-  function app() {
-    
+
+  if (!state) {
+    return <h4>loading...</h4>;
   }
-
-if(!state){
-  return (
-    <h4>
-       loading...
-    </h4>
-  );
-}
-
+  console.log(state);
   return (
     <>
-      <Container>
-        <Row>
+      <Alert
+        show={showDangerAlert}
+        variant="danger"
+        className="text-center position-absolute top-50 start-50 translate-middle"
+      >
+        Not enough currency
+      </Alert>
+      <Container className="py-5">
+        <Row className="py-2">
           {state.map((item) => (
-            <Col>
-              <h2>name: {item.name}</h2>
-              <div>image: {item.image}</div>
-              <span>description: {item.description}</span>
-              <span>price: {item.price}</span>
-              <button value={item._id} onClick={handleButtonSubmit}>
-                purchase
-              </button>
+            <Col md={4} sm={12}>
+              <Card className="bg-primary rounded-4">
+                <Card.Header>
+                  <h2>Name: {item.name}</h2>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title className="pb-1">
+                    Description: {item.description}
+                  </Card.Title>
+                  <Card.Text>Price: {item.price}</Card.Text>
+                  <Row>
+                    <Col className="d-flex flex-row-reverse px-3">
+                      <Button
+                        variant="secondary"
+                        value={item._id}
+                        onClick={handleButtonSubmit}
+                      >
+                        Purchase
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
             </Col>
           ))}
         </Row>

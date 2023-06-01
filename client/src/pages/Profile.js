@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 
@@ -38,31 +39,71 @@ const Profile = () => {
 
   return (
     <>
-      <Container>
-        <Row>
-          <Col>Username: {user.username}</Col>
-        </Row>
-        <Row>
-          <Col>wins: {user.wins}</Col>
-          <Col>losses: {user.losses}</Col>
-        </Row>
-        <Row>
-          <Col>
-          inventory
+      <Container className="py-5">
+        <Row className="pb-2">
+          <Col className="text-center">
+            <Card className="bg-primary rounded-4">
+              <Card.Header>
+                <h4>Username</h4>
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  <h2>{user.username}</h2>
+                </Card.Title>
+              </Card.Body>
+            </Card>
           </Col>
-          <Col>
-          currency: {user.currecy}
+        </Row>
+        <Row className="">
+          <Col md={6} sm={12} className="text-center py-2">
+            <Card className="bg-primary rounded-4">
+              <Card.Header>
+                <h4>Wins</h4>
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  <h2>{user.wins}</h2>
+                </Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6} sm={12} className="text-center py-2">
+            <Card className="bg-primary rounded-4">
+              <Card.Header>
+                <h4>Losses</h4>
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  <h2>{user.losses}</h2>
+                </Card.Title>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
-        <Row>
-          {user.inventory.map((item) => (
-            <Col>
-              <div>purchase date: {item.purchaseDate}</div>
-              <div>name: {item.merch.name}</div>
-              <div>description: {item.merch.description}</div>
-              <div>image: {item.merch.image}</div>
-            </Col>
-          ))}
+        <Row className="py-2">
+          <Col>
+            <Card className="bg-primary rounded-4">
+              <Card.Header>
+                <h4 className="text-start">Inventory</h4>
+              </Card.Header>
+              <Card.Body>
+                <Card.Title className="pb-1">
+                  <h5>Currency: {user.currecy}</h5>
+                </Card.Title>
+                <Row>
+                  {user.inventory.map((item) => (
+                    <Col md={4} sm={12} className="">
+                      <ul className="bg-info py-2 px-2 rounded-3">
+                        <dt>{item.merch.name}</dt>
+                        <dt>Description: {item.merch.description}</dt>
+                        <dt>Image: {item.merch.image}</dt>
+                      </ul>
+                    </Col>
+                  ))}
+                </Row>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </>

@@ -17,11 +17,7 @@ import Play from "./pages/Play";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-
-
 import "./apps.css"
-
-
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -51,9 +47,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        <div className="flex-column justify-flex-start min-vh-100">
           <Header />
-          <div className="container">
+          <div className="container min-vh-100">
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

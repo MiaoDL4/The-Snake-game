@@ -1,27 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
 
-import Auth from '../../utils/auth';
+import Auth from "../../utils/auth";
 
 const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
+
   return (
-    <Navbar bg="light">
+    <Navbar bg="primary">
       <Container>
-        <Navbar.Brand as={Link} to="/">The Snake Game</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          <h2>The Snake Game</h2>
+        </Navbar.Brand>
 
         <div>
-        {Auth.loggedIn() &&  <>
-              <Button className="m-2" onClick={logout}>
+          {Auth.loggedIn() && (
+            <Container>
+              {location.pathname !== "/" && (
+                <Button
+                  variant="dark"
+                  className="m-2"
+                  onClick={() => navigate(-1)}
+                >
+                  &larr; Go Back
+                </Button>
+              )}
+              <Button variant="outline-danger" className="m-2" onClick={logout}>
                 Logout
               </Button>
-            </>}
+            </Container>
+          )}
         </div>
       </Container>
     </Navbar>
@@ -29,30 +46,3 @@ const Header = () => {
 };
 
 export default Header;
-{/* <Nav className="me-auto">
-<Nav.Link as={Link} to="/">Home</Nav.Link>
-<Nav.Link as={Link} to="/solo">play solo</Nav.Link>
-<Nav.Link as={Link} to="/vs">play vs</Nav.Link>
-<Nav.Link as={Link} to="/shop">shop</Nav.Link>
-</Nav>
-<div>
-{Auth.loggedIn() ? (
-  <>
-    <Button as={Link} variant='info' className="m-2" to="/me">
-      {Auth.getProfile().data.username}'s profile
-    </Button>
-    <Button className="m-2" onClick={logout}>
-      Logout
-    </Button>
-  </>
-) : (
-  <>
-    <Button as={Link} variant='primary' className="m-2" to="/login">
-      Login
-    </Button>
-    <Button as={Link} variant='secondary' className="m-2" to="/signup">
-      Signup
-    </Button>
-  </>
-)}
-</div> */}

@@ -95,8 +95,7 @@ const Profile = () => {
                     <Col md={4} sm={12} className="">
                       <ul className="bg-info py-2 px-2 rounded-3">
                         <dt>{item.merch.name}</dt>
-                        <dt>Description: {item.merch.description}</dt>
-                        <dt>Image: {item.merch.image}</dt>
+                        <dd>Description: {item.merch.description}</dd>
                       </ul>
                     </Col>
                   ))}

@@ -39,10 +39,20 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+
+    updateCurrency: async (_, args, context) => {
+      if (context.user) {
+        await User.findByIdAndUpdate(context.user._id, args, {new: true});
+        return User;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    
     updateScore: async (_, args, context) => {
       if (context.user) {
         await User.findByIdAndUpdate(context.user._id, args, {new: true});
-        return;
+        return User;
       }
 
       throw new AuthenticationError("Not logged in");

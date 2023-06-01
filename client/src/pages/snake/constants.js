@@ -1,6 +1,6 @@
 const CANVAS_SIZE = [800, 800];
 const SNAKE_START = [
-  [8, 7],
+  [5, 16],
   [8, 8]
 ];
 const FOOD_START = [8, 3];

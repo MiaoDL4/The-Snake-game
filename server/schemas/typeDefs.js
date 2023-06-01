@@ -44,6 +44,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addItem(merch: String!): Item
     updateScore(wins: Int!, losses: Int!): User
+    updateCurrency(currency: Int!):User
   }
 `;
 

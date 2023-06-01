@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInterval } from "./useInterval.js";
+
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 import {
   CANVAS_SIZE,
   SNAKE_START,
@@ -34,19 +42,19 @@ const Solo = () => {
   const movement = ({ keyCode }) => {
     switch (keyCode) {
       case 37:
-        if ((direction === DIRECTIONS[39])) break;
+        if (direction === DIRECTIONS[39]) break;
         setDirection(DIRECTIONS[keyCode]);
         break;
       case 38:
-        if ((direction === DIRECTIONS[40])) break;
+        if (direction === DIRECTIONS[40]) break;
         setDirection(DIRECTIONS[keyCode]);
         break;
       case 39:
-        if ((direction === DIRECTIONS[37])) break;
+        if (direction === DIRECTIONS[37]) break;
         setDirection(DIRECTIONS[keyCode]);
         break;
       case 40:
-        if ((direction === DIRECTIONS[38])) break;
+        if (direction === DIRECTIONS[38]) break;
         setDirection(DIRECTIONS[keyCode]);
         break;
       default:
@@ -90,10 +98,9 @@ const Solo = () => {
       snakeCopy[0][1] + direction[1],
     ];
     snakeCopy.unshift(newSnakeHead);
-    if (checkCollision(newSnakeHead)){
-      
-      endGame()
-    } ;
+    if (checkCollision(newSnakeHead)) {
+      endGame();
+    }
     if (!checkFoodCollision(snakeCopy)) {
       snakeCopy.pop();
     } else {
@@ -123,18 +130,38 @@ const Solo = () => {
   }, [snake, food, gameOver]);
 
   return (
-    <>
-      <div role="button" tabIndex="0" onKeyDown={(e) => movement(e)}>
-        <canvas
-          style={{border: "1px solid black"}}
-          ref={canvasRef}
-          width={`${CANVAS_SIZE[0]}px`}
-          height={`${CANVAS_SIZE[1]}px`}
-        />
-        {gameOver && <div>game over</div>}
-        <button onClick={gameStart}>start game</button>
-      </div>
-    </>
+    <Container  autoFocus tabIndex="0" onKeyDown={(e) => movement(e)}>
+      <Row>
+        <Col className=" d-flex justify-content-center pt-5 pb-3">
+          <div className="">
+            <canvas
+              role="button"
+              className="border-primary"
+              style={{ border: "1px solid black" }}
+              ref={canvasRef}
+              width={`${CANVAS_SIZE[0]}px`}
+              height={`${CANVAS_SIZE[1]}px`}
+            />
+
+            {gameOver && (
+              <Alert
+                variant="danger"
+                className="text-center position-absolute top-50 start-50 translate-middle"
+              >
+                <h3>GAME OVER</h3>
+              </Alert>
+            )}
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col className=" d-flex justify-content-center">
+          <Button variant="secondary" onClick={gameStart}>
+            Start Game
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

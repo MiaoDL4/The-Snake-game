@@ -11,21 +11,18 @@ const merchSchema = new Schema({
   description: {
     type: String
   },
-  image: {
-    type: String
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: 1
-  },
   price: {
     type: Number,
     required: true,
   },
-  modifier: {
+  modifierSnake: {
     type: String,
-    required: true,
+  },
+  modifierBoard: {
+    type: String,
+  },
+  modifierFood: {
+    type: String,
   },
 });
 

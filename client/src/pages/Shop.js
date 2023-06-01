@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_MERCH } from "../utils/queries";
-import { ADD_ITEM } from "../utils/mutations";
+import { PURCHASE_ITEM } from "../utils/mutations";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,7 +17,7 @@ const Shop = () => {
   const [currency, setCurrency] = useState();
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(QUERY_MERCH);
-  const [addItem] = useMutation(ADD_ITEM);
+  const [addItem] = useMutation(PURCHASE_ITEM);
   const [showDangerAlert, setshowDangerAlert] = useState(false);
 
   const user = data?.me;
@@ -57,14 +57,16 @@ const Shop = () => {
     const selected = state.find((seletedItem) => seletedItem._id === ID);
     if (currency > selected.price) {
       const updateItems = state.filter((FilteredItem) => FilteredItem._id !== ID);
-      setState(updateItems);
+      const newCurrency = currency-selected.price;
       try {
         const { data } = await addItem({
-          variables: { merch: ID },
+          variables: { merch: ID, currency: newCurrency},
         });
       } catch (err) {
         console.error(err);
       }
+      setCurrency(newCurrency)
+      setState(updateItems);
     } else{
       setshowDangerAlert(!showDangerAlert);
     }
@@ -76,24 +78,17 @@ const Shop = () => {
   console.log(state);
   return (
     <>
-      <Alert
-        show={showDangerAlert}
-        variant="danger"
-        className="text-center position-absolute top-50 start-50 translate-middle"
-      >
-        Not enough currency
-      </Alert>
       <Container className="py-5">
-        <Row className="py-2">
+        <Row>
           {state.map((item) => (
-            <Col md={4} sm={12}>
+            <Col md={4} sm={12} className="py-2 h-100">
               <Card className="bg-primary rounded-4">
                 <Card.Header>
-                  <h2>Name: {item.name}</h2>
+                  <h2>{item.name}</h2>
                 </Card.Header>
                 <Card.Body>
                   <Card.Title className="pb-1">
-                    Description: {item.description}
+                    {item.description}
                   </Card.Title>
                   <Card.Text>Price: {item.price}</Card.Text>
                   <Row>
@@ -113,6 +108,13 @@ const Shop = () => {
           ))}
         </Row>
       </Container>
+      <Alert
+        show={showDangerAlert}
+        variant="danger"
+        className="text-center position-absolute top-50 start-50 translate-middle"
+      >
+        Not enough currency
+      </Alert>
     </>
   );
 };

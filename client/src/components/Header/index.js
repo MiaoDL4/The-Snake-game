@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
 
 import Auth from "../../utils/auth";
 
@@ -23,9 +22,7 @@ const Header = () => {
         </Navbar.Brand>
 
         <div>
-          {Auth.loggedIn() && (
-            <Container>
-              {location.pathname !== "/" && (
+        {location.pathname !== "/" && (
                 <Button
                   variant="dark"
                   className="m-2"
@@ -34,10 +31,10 @@ const Header = () => {
                   &larr; Go Back
                 </Button>
               )}
+          {Auth.loggedIn() && (
               <Button variant="outline-danger" className="m-2" onClick={logout}>
                 Logout
               </Button>
-            </Container>
           )}
         </div>
       </Container>

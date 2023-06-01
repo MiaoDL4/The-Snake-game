@@ -52,7 +52,6 @@ const Shop = () => {
     );
   }
   const handleButtonSubmit = async (e) => {
-    e.preventDefault();
     const ID = e.target.value;
     const selected = state.find((seletedItem) => seletedItem._id === ID);
     if (currency > selected.price) {
@@ -128,7 +127,7 @@ const Shop = () => {
                       </div>
                     </Col>
                   </Card.Title>
-                  <Row className="d-flex justify-content-center">
+                  <Row>
                     <Col className="d-flex flex-row-reverse px-3">
                       <Button
                         variant="outline-secondary"

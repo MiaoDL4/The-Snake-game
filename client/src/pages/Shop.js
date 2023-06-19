@@ -54,6 +54,7 @@ const Shop = () => {
   const handleButtonSubmit = async (e) => {
     const ID = e.target.value;
     const selected = state.find((seletedItem) => seletedItem._id === ID);
+    console.log(currency);
     if (currency >= selected.price) {
       const updateItems = state.filter(
         (FilteredItem) => FilteredItem._id !== ID

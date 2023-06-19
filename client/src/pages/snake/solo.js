@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInterval } from "./useInterval.js";
 
-
-
-//import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 import {
   CANVAS_SIZE,
@@ -17,19 +14,13 @@ import {
   SCALE,
   SPEED,
   DIRECTIONS,
-  GROWTH,
-  DEFAULT
+  DEFAULT,
 } from "./constants";
-import { json } from "react-router-dom";
 
 const Solo = () => {
-  //grid/play space
-  //snake
-  //pick up randomly generating to the grid but not where the snake is
-  //movement usng arrow keys can not reverse driection
-  //snake grow and moves fast when getting pick up
-  //game over conditons 1 hitting boarder 2 hitting self
   const canvasRef = useRef();
+  const timerId = useRef();
+  let time = useRef(0);
   const [snake, setSnake] = useState(SNAKE_START);
   const [food, setFood] = useState(FOOD_START);
   const [direction, setDirection] = useState([0, -1]);
@@ -37,20 +28,32 @@ const Solo = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
+
   localStorage.setItem("default", JSON.stringify(DEFAULT));
 
-  let theme = JSON.parse(localStorage.getItem('themeSnake'));
+  let theme = JSON.parse(localStorage.getItem("themeSnake"));
 
+  const startTimer = () => {
+    timerId.current = setInterval(() => {
+      time.current++;
+    }, 1000);
+  };
 
-  if(!theme){
-    theme = JSON.parse(localStorage.getItem('default'));
+  const stopTimer = () => {
+    clearInterval(timerId.current);
+    timerId.current = 0;
+  };
+
+  if (!theme) {
+    theme = JSON.parse(localStorage.getItem("default"));
   }
-  
+
   useInterval(() => gameLoop(), speed);
 
   const endGame = () => {
     setSpeed(null);
     setGameOver(true);
+    stopTimer();
   };
 
   const movement = ({ keyCode }) => {
@@ -118,9 +121,9 @@ const Solo = () => {
     if (!checkFoodCollision(snakeCopy)) {
       snakeCopy.pop();
     } else {
-      let currentScore = score
+      let currentScore = score;
       setScore(currentScore + 1);
-      for (let i = 0; i <= GROWTH; i++) {
+      for (let i = 0; i <= score / 10; i++) {
         snakeCopy.push(snakeCopy[snakeCopy.length - 1]);
       }
     }
@@ -132,48 +135,55 @@ const Solo = () => {
     setFood(FOOD_START);
     setDirection(DIRECTIONS[38]);
     setSpeed(SPEED);
-    setScore(0)
+    setScore(0);
     setGameOver(false);
+    time.current = 0;
+    startTimer();
   };
 
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
+    canvasRef.current.focus();
     context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+    //window.addEventListener("keydown", movement);
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     context.fillStyle = theme.merch.modifierSnake;
     snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
     context.fillStyle = theme.merch.modifierFood;
     context.fillRect(food[0], food[1], 1, 1);
-  }, [snake, food, gameOver]);
+  }, [snake, food, gameOver, theme ]);
 
   return (
-    <Container  autoFocus tabIndex="0" onKeyDown={(e) => movement(e)}>
+    <Container autoFocus tabIndex="0" onKeyDown={(e) => movement(e)}>
+      {/*  */}
       <Row>
-        <Col className=" d-flex justify-content-center pt-5 pb-3">
-          <div className="">
-            <canvas
-              role="button"
-              className="border-primary"
-              style={{ border: "1px solid black" , backgroundColor: theme.merch.modifierBoard}}
-              ref={canvasRef}
-              width={`${CANVAS_SIZE[0]}px`}
-              height={`${CANVAS_SIZE[1]}px`}
-            />
-
-            {gameOver && (
-              <Alert
-                variant="danger"
-                className="text-center position-absolute top-50 start-50 translate-middle"
-              >
-                <h3>GAME OVER</h3>
-              </Alert>
-            )}
-          </div>
+        <Col className=" d-flex justify-content-center pt-5 pb-3 ">
+          <canvas
+            role="button"
+            className="border-primary"
+            style={{
+              border: "1px solid",
+              backgroundColor: theme.merch.modifierBoard,
+            }}
+            ref={canvasRef}
+            width={`${CANVAS_SIZE[0]}px`}
+            height={`${CANVAS_SIZE[1]}px`}
+          />
+        </Col>
+      </Row>
+      <Row className="justify-content-md-center">
+        <Col md={8} className="text-center">
+          <Card className="bg-dark border-primary rounded-4">
+            <Row className="p-2">
+              <Col>Points : {score}</Col>
+              <Col>Timer : {time.current}</Col>
+            </Row>
+          </Card>
         </Col>
       </Row>
       <Row>
-        <Col className=" d-flex justify-content-center">
-          <Button variant="secondary" onClick={gameStart}>
+        <Col className=" d-flex justify-content-center py-2">
+          <Button onClick={gameStart}>
             Start Game
           </Button>
         </Col>

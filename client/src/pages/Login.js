@@ -1,4 +1,4 @@
-import React, { useState , useMemo } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
@@ -60,7 +60,7 @@ const Login = (props) => {
                   <h1>Proflie</h1>
                 </Button>
               </Col>
-              <Col md={4} sm={12} as={Link} to="/play" className="my-2">
+              <Col md={4} sm={12} as={Link} to="/solo" className="my-2">
                 <Button variant="outline-danger" className="d-flex justify-content-center align-items-center mx-2 rounded-4 h-100 w-100">
                   <h1>Play</h1>
                 </Button>

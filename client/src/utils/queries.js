@@ -1,37 +1,39 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_MERCH = gql`
-query Query {
-  me {
-    _id
-    username
-    currency
-    inventory {
-      merch {
-        _id
+  query Query {
+    me {
+      _id
+      username
+      currency
+      inventory {
+        merch {
+          _id
+        }
       }
     }
+    merch {
+      _id
+      name
+      description
+      price
+      modifierSnake
+      modifierBoard
+      modifierFood
+    }
   }
-  merch {
-    _id
-    name
-    description
-    price
-    modifierSnake
-    modifierBoard
-    modifierFood
-  }
-}`;
+`;
 
 export const QUERY_SCORE = gql`
-query currentScore {
-  me {
-    _id
-    username
-    wins
-    losses
+  query currentScore {
+    me {
+      _id
+      username
+      wins
+      losses
+    }
   }
-}`;
+`;
 
 export const QUERY_USER = gql`
   query user($username: String!) {
@@ -46,7 +48,7 @@ export const QUERY_USER = gql`
 export const QUERY_ME = gql`
   query Me {
     me {
-      _id 
+      _id
       username
       email
       wins
@@ -67,3 +69,4 @@ export const QUERY_ME = gql`
     }
   }
 `;
+

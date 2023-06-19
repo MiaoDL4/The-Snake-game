@@ -1,6 +1,11 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type Message {
+    id: ID!
+    user: String!
+    content: String!
+  }
   type Merch {
     _id: ID
     name: String
@@ -45,7 +50,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addItem(merch: String!): Item
     updateScore(wins: Int!, losses: Int!): User
-    updateCurrency(currency: Int!):User
+    updateCurrency(currency: Int!): User
+    postMessage(user: String!, content: String!):ID!
   }
 `;
 

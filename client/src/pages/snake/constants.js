@@ -12,7 +12,6 @@ const DIRECTIONS = {
   37: [-1, 0], // left
   39: [1, 0], // right
 };
-const GROWTH = 1;
 
 const DEFAULT = {
   merch: {
@@ -30,6 +29,5 @@ export {
   SCALE,
   SPEED,
   DIRECTIONS,
-  GROWTH,
   DEFAULT
 };

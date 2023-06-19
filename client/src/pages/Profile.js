@@ -39,6 +39,7 @@ const Profile = () => {
       </h4>
     );
   }
+  
   if (!user) {
     return <h4>loading...</h4>;
   }
@@ -72,7 +73,7 @@ const Profile = () => {
             </Card>
           </Col>
         </Row>
-        <Row className="">
+        <Row>
           <Col md={6} sm={12} className="text-center py-2">
             <Card className="bg-dark border-primary rounded-4">
               <Card.Header>
@@ -179,7 +180,7 @@ const Profile = () => {
       >
         <strong>Theme Changed</strong>
 
-        <button aria-label="Close" onClick={alertButton}></button>
+        <button aria-label="Close" onClick={alertButton}>X</button>
       </Alert>
     </>
   );

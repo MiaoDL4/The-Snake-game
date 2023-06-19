@@ -13,7 +13,6 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Solo from "./pages/snake/solo";
 import Shop from "./pages/Shop";
-import Play from "./pages/Play";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -55,7 +54,6 @@ function App() {
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/solo" element={<Solo />} />
               <Route path="/shop" element={<Shop />} />
-              <Route path="/play" element={<Play />} />
             </Routes>
           </div>
           <Footer />

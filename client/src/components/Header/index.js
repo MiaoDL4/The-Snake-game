@@ -18,7 +18,7 @@ const Header = () => {
     <Navbar bg="dark">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <h2>The Snake Game</h2>
+          <h2 style={{ color: "cyan" }}>The Snake Game</h2>
         </Navbar.Brand>
 
         <div>

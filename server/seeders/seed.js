@@ -83,6 +83,8 @@ db.once("open", async () => {
       inventory: [
         {
           merch: merch[0]._id,
+          merch: merch[1]._id,
+          merch: merch[2]._id,
         },
       ],
     },

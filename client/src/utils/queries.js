@@ -1,5 +1,13 @@
 import { gql } from "@apollo/client";
 
+export const QUERY_CURRENCY = gql`
+  query Query {
+    me {
+      currency
+    }
+  }
+`;
+
 export const QUERY_MERCH = gql`
   query Query {
     me {
@@ -24,17 +32,6 @@ export const QUERY_MERCH = gql`
   }
 `;
 
-export const QUERY_SCORE = gql`
-  query currentScore {
-    me {
-      _id
-      username
-      wins
-      losses
-    }
-  }
-`;
-
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
@@ -51,9 +48,12 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      wins
-      losses
       currency
+      games{
+        _id
+        score
+        time
+      }
       inventory {
         _id
         purchaseDate
@@ -69,4 +69,3 @@ export const QUERY_ME = gql`
     }
   }
 `;
-

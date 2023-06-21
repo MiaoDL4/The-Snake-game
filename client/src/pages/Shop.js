@@ -32,8 +32,9 @@ const Shop = () => {
         return !existing;
       });
       setState(filteredItems);
+      setCurrency(user.currency);
     }
-  }, [data]);
+  }, [data, items, userItems]);
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/store" />;
@@ -51,18 +52,31 @@ const Shop = () => {
       </h4>
     );
   }
+
+  if (!state) {
+    return <h4>loading...</h4>;
+  }
+
   const handleButtonSubmit = async (e) => {
+    e.preventDefault();
     const ID = e.target.value;
+    if (ID == null) {
+      console.log("fail");
+      console.log(state);
+      console.log(ID);
+      return;
+    }
+
     const selected = state.find((seletedItem) => seletedItem._id === ID);
-    console.log(currency);
+    alertButton();
     if (currency >= selected.price) {
       const updateItems = state.filter(
         (FilteredItem) => FilteredItem._id !== ID
       );
       const newCurrency = currency - selected.price;
-      console.log(newCurrency)
+      console.log(newCurrency);
       try {
-        const { data } = await addItem({
+        await addItem({
           variables: { merch: ID, currency: newCurrency },
         });
       } catch (err) {
@@ -81,72 +95,74 @@ const Shop = () => {
     setshowSucessAlert(false);
   };
 
-  if (!state) {
-    return <h4>loading...</h4>;
-  }
-
   return (
     <>
       <Container className="py-5">
-        {/* <Row>
+        <Row>
           <Col className="pb-2">
             <Card className="bg-primary rounded-4 text-center pt-2">
-              <h2> Currency: {user.currency}</h2>
+              <h2> Apples: {currency}</h2>
             </Card>
           </Col>
-        </Row> */}
+        </Row>
         <Row>
-          {state.map((item) => (
-            <Col md={4} sm={12} className="py-2 h-100">
+          {state.map((item, id) => (
+            <Col key={id} md={4} sm={12} className="py-2 h-100">
               <Card className="bg-primary rounded-4">
                 <Card.Header>
-                  <h2>{item.name} Theme</h2>
-                </Card.Header>
-                <Card.Body>
-                  <Card.Title className="pb-1 text-center">
-                    <Col>
-                      <div
-                        className="rounded-3"
-                        style={{
-                          backgroundColor: item.modifierSnake,
-                        }}
-                      >
-                        Snake
-                      </div>
-                    </Col>
-                    <Col>
-                      <div
-                        className="rounded-3"
-                        style={{
-                          backgroundColor: item.modifierBoard,
-                        }}
-                      >
-                        Board
-                      </div>
-                    </Col>
-                    <Col>
-                      <div
-                        className="rounded-3"
-                        style={{
-                          backgroundColor: item.modifierFood,
-                        }}
-                      >
-                        Food
-                      </div>
-                    </Col>
-                  </Card.Title>
                   <Row>
-                    <Col className="d-flex flex-row-reverse px-3">
+                    <Col>
+                      <h2>{item.name}</h2>
+                    </Col>
+                    <Col className="d-flex flex-row-reverse">
                       <Button
-                        key={item._id}  
+                        className="btn-sm bg-dark"
+                        key={item._id}
                         variant="outline-secondary"
                         value={item._id}
                         onClick={handleButtonSubmit}
                       >
-                        Purchase for {item.price}
+                        {item.price} Apples
                       </Button>
                     </Col>
                   </Row>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title className="pb-1 text-center">
+                    <Row>
+                      <Col>
+                        <div
+                          className="rounded-3"
+                          style={{
+                            color: item.modifierSnake,
+                          }}
+                        >
+                          Snake
+                        </div>
+                      </Col>
+                      <Col>
+                        <div
+                          className="rounded-3"
+                          style={{
+                            color: item.modifierBoard,
+                          }}
+                        >
+                          Board
+                        </div>
+                      </Col>
+                      <Col>
+                        <div
+                          className="rounded-3"
+                          style={{
+                            color: item.modifierFood,
+                          }}
+                        >
+                          Apple
+                        </div>
+                      </Col>
+                    </Row>
+                  </Card.Title>
+                  <Row></Row>
                 </Card.Body>
               </Card>
             </Col>
@@ -158,16 +174,24 @@ const Shop = () => {
         variant="danger"
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
-        Not enough currency
-        <button aria-label="Close" onClick={alertButton}></button>
+        <h4>
+          Not enough currency{" "}
+          <Button variant="danger" onClick={alertButton}>
+            X
+          </Button>
+        </h4>
       </Alert>
       <Alert
         show={showSuccessAlert}
         variant="success"
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
-        Item purchased
-        <button aria-label="Close" onClick={alertButton}></button>
+        <h4>
+          Item purchased{" "}
+          <Button variant="success" onClick={alertButton}>
+            X
+          </Button>
+        </h4>
       </Alert>
     </>
   );

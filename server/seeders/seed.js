@@ -54,6 +54,70 @@ db.once("open", async () => {
       modifierBoard: "#ff2a6d",
       modifierFood: "#f2e0df", //red jacket
     },
+    {
+      name: "July",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#bb1212",
+      modifierBoard: "#eeeeee",
+      modifierFood: "#537da3",
+    },
+    {
+      name: "Soft",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#519fde",
+      modifierBoard: "#7b7e25",
+      modifierFood: "#519fde", 
+    },
+    {
+      name: "Tiny",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#d8aa01",
+      modifierBoard: "#2f530d",
+      modifierFood: "#eedb07",
+    },
+    {
+      name: "Lake",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#b1d1ab",
+      modifierBoard: "#3c91bf",
+      modifierFood: "#2b343a", 
+    },
+    {
+      name: "Asphalt",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#b1c6c4",
+      modifierBoard: "#c9d6d9",
+      modifierFood: "#060707", 
+    },
+    {
+      name: "Neon",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#ef39a4",
+      modifierBoard: "#fdc71d",
+      modifierFood: "#0b72c4", 
+    },
+    {
+      name: "4Deal",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#fe320d",
+      modifierBoard: "#bbbbbb",
+      modifierFood: "#feab0d", 
+    },
+    {
+      name: "Lake",
+      description: "Changes the board to Maroon",
+      price: 10,
+      modifierSnake: "#000f00",
+      modifierBoard: "#0d6608",
+      modifierFood: "#feff15", 
+    },
   ]);
 
   console.log("products seeded");
@@ -80,12 +144,11 @@ db.once("open", async () => {
       username: "four",
       email: "four@four.com",
       password: "44444",
+      games: [{score: 50, time: 150},],
       inventory: [
-        {
-          merch: merch[0]._id,
-          merch: merch[1]._id,
-          merch: merch[2]._id,
-        },
+        { merch: merch[0]._id },
+        { merch: merch[1]._id },
+        { merch: merch[2]._id },
       ],
     },
   ]);

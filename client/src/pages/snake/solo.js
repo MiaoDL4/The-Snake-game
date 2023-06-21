@@ -1,11 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInterval } from "./useInterval.js";
 
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_SCORE, UPDATE_CURRENCY } from "../../utils/mutations";
+import { QUERY_CURRENCY } from "../../utils/queries";
+
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 
 import {
   CANVAS_SIZE,
@@ -21,6 +26,10 @@ const Solo = () => {
   const canvasRef = useRef();
   const timerId = useRef();
   let time = useRef(0);
+
+  const [addScore] = useMutation(ADD_SCORE);
+  const [updateCurrency] = useMutation(UPDATE_CURRENCY);
+  const {  data } = useQuery(QUERY_CURRENCY);
   const [snake, setSnake] = useState(SNAKE_START);
   const [food, setFood] = useState(FOOD_START);
   const [direction, setDirection] = useState([0, -1]);
@@ -28,10 +37,16 @@ const Solo = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
+  //ensure game has theme on first time playing
+  let theme = JSON.parse(localStorage.getItem("themeSnake"));
 
   localStorage.setItem("default", JSON.stringify(DEFAULT));
 
-  let theme = JSON.parse(localStorage.getItem("themeSnake"));
+  if (!theme) {
+    theme = JSON.parse(localStorage.getItem("default"));
+  }
+
+
 
   const startTimer = () => {
     timerId.current = setInterval(() => {
@@ -42,11 +57,24 @@ const Solo = () => {
   const stopTimer = () => {
     clearInterval(timerId.current);
     timerId.current = 0;
+    time.current = 0;
   };
 
-  if (!theme) {
-    theme = JSON.parse(localStorage.getItem("default"));
-  }
+  const updateGamesAndCurrency = async () => {
+    const newCurrency = data?.me.currency + score;
+    console.log(data?.me.currency)
+    console.log(score)
+    try {
+      await addScore({
+        variables: { score: score, time: time.current },
+      });
+      await updateCurrency({
+        variables: { currency: newCurrency },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useInterval(() => gameLoop(), speed);
 
@@ -54,6 +82,7 @@ const Solo = () => {
     setSpeed(null);
     setGameOver(true);
     stopTimer();
+    updateGamesAndCurrency();
   };
 
   const movement = ({ keyCode }) => {
@@ -137,7 +166,6 @@ const Solo = () => {
     setSpeed(SPEED);
     setScore(0);
     setGameOver(false);
-    time.current = 0;
     startTimer();
   };
 
@@ -145,13 +173,12 @@ const Solo = () => {
     const context = canvasRef.current.getContext("2d");
     canvasRef.current.focus();
     context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
-    //window.addEventListener("keydown", movement);
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     context.fillStyle = theme.merch.modifierSnake;
     snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
     context.fillStyle = theme.merch.modifierFood;
     context.fillRect(food[0], food[1], 1, 1);
-  }, [snake, food, gameOver, theme ]);
+  }, [snake, food, gameOver, theme]);
 
   return (
     <Container autoFocus tabIndex="0" onKeyDown={(e) => movement(e)}>
@@ -169,6 +196,15 @@ const Solo = () => {
             width={`${CANVAS_SIZE[0]}px`}
             height={`${CANVAS_SIZE[1]}px`}
           />
+          {gameOver && (
+            <Alert
+              variant="danger"
+              className="text-center position-absolute top-50 start-50 translate-middle"
+            >
+              <h3>GAME OVER</h3>
+              <h4>You got {score} apples!</h4>
+            </Alert>
+          )}
         </Col>
       </Row>
       <Row className="justify-content-md-center">
@@ -183,9 +219,7 @@ const Solo = () => {
       </Row>
       <Row>
         <Col className=" d-flex justify-content-center py-2">
-          <Button onClick={gameStart}>
-            Start Game
-          </Button>
+          <Button onClick={gameStart}>Start Game</Button>
         </Col>
       </Row>
     </Container>

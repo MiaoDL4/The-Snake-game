@@ -22,14 +22,19 @@ const typeDefs = gql`
     merch: Merch
   }
 
+  type Game {
+    _id: ID
+    score: Int
+    time: Int
+  }
+
   type User {
     _id: ID
     username: String
     email: String
     password: String
-    wins: Int
-    losses: Int
     currency: Int
+    games: [Game]
     inventory: [Item]
   }
 
@@ -49,9 +54,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addItem(merch: String!): Item
-    updateScore(wins: Int!, losses: Int!): User
+    updateGames(score: Int!, time: Int!): User
     updateCurrency(currency: Int!): User
-    postMessage(user: String!, content: String!):ID!
   }
 `;
 

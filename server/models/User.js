@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
 
 const Item = require("./Item");
+const Game = require("./Game");
 
 const userSchema = new Schema({
   username: {
@@ -23,14 +24,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  wins: {
-    type: Number,
-    default: 0,
-  },
-  losses: {
-    type: Number,
-    default: 0,
-  },
+  games: [Game.schema],
   currency: {
     type: Number,
     default: 100,

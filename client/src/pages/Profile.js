@@ -39,11 +39,10 @@ const Profile = () => {
       </h4>
     );
   }
-  
+
   if (!user) {
     return <h4>loading...</h4>;
   }
-
   const handleButton = async (e) => {
     const ID = e.target.value;
     const selected = user.inventory.find(
@@ -59,113 +58,123 @@ const Profile = () => {
   return (
     <>
       <Container className="py-5">
-        <Row className="pb-2">
-          <Col className="text-center">
-            <Card className="bg-dark border-primary rounded-4">
-              <Card.Header>
-                <h3>Username</h3>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  <h1>{user.username}</h1>
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
         <Row>
-          <Col md={6} sm={12} className="text-center py-2">
-            <Card className="bg-dark border-primary rounded-4">
-              <Card.Header>
-                <h3>Wins</h3>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  <h2>{user.wins}</h2>
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={6} sm={12} className="text-center py-2">
-            <Card className="bg-dark border-primary rounded-4">
-              <Card.Header>
-                <h3>Losses</h3>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  <h2>{user.losses}</h2>
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Row className="py-2">
           <Col>
-            <Card className="bg-dark border-primary rounded-4">
+            <Row className="pb-3">
+              <Card className="bg-dark border-primary rounded-4 p-0">
+                <Card.Header>
+                  <h3>Username</h3>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title className="text-center">
+                    <h1>{user.username}</h1>
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Row>
+            <Row className="pb-3">
+              <Card
+                md={6}
+                sm={12}
+                className="bg-dark border-primary rounded-4 p-0"
+              >
+                <Card.Header>
+                  <h3>Top games</h3>
+                </Card.Header>
+                <Col className="p-2">
+                  {user.games.slice(0,5).map((game) => (
+                    <Row className="m-0 text-center">
+                      <Col className="bg-dark">
+                        <h4>apples eaten: {game.score}</h4>
+                      </Col>
+                      <Col className="bg-dark">
+                        <h4>Time: {game.time}</h4>
+                      </Col>
+                    </Row>
+                  ))}
+                </Col>
+              </Card>
+            </Row>
+            <Row className="pb-3">
+              <Card className="bg-dark border-primary rounded-4 p-0 ">
+                <Card.Header>
+                  <h3> Apples</h3>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title className="text-center">
+                    <h2>{user.currency}</h2>
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Row>
+          </Col>
+          <Col>
+            <Card className="bg-dark border-primary rounded-4 ">
               <Card.Header>
-                <h3 className="text-start">Inventory</h3>
+                <h3 className="text-start">Themes</h3>
               </Card.Header>
               <Card.Body>
-                <Card.Title className="pb-1">
-                  <h5>Currency: {user.currency}</h5>
-                </Card.Title>
                 <Row className="text-center ">
-                  {user.inventory.map((item, id) => (
-                    <Col md={4} sm={12} className="{id}">
-                      <Card className="py-2 px-2 rounded-3 border-info">
+                  {/* make in to comp */}
+                  {user.inventory.map((item) => (
+                    <Row md={4} sm={12} className="{id} w-100 py-1 m-0">
+                      <Card className="py-1 px-2 rounded-3 w-100">
                         <dt>
                           <h5>{item.merch.name}</h5>
                         </dt>
-                        <Row>
-                          <Col>
-                            <h6>theme colours</h6>
-                          </Col>
-                        </Row>
-                        <Row className="pb-3">
+                        <Row className="pb-1">
                           <Col>
                             <div
                               className="rounded-3"
                               style={{
-                                backgroundColor: item.merch.modifierSnake,
+                                color: item.merch.modifierSnake,
                               }}
                             >
-                              Snake
+                              <h5>
+                                <strong>Snake</strong>
+                              </h5>
                             </div>
                           </Col>
                           <Col>
                             <div
                               className="rounded-3"
                               style={{
-                                backgroundColor: item.merch.modifierBoard,
+                                color: item.merch.modifierBoard,
                               }}
                             >
-                              Board
+                              <h5>
+                                <strong>Board</strong>
+                              </h5>
                             </div>
                           </Col>
                           <Col>
                             <div
                               className="rounded-3"
                               style={{
-                                backgroundColor: item.merch.modifierFood,
+                                color: item.merch.modifierFood,
                               }}
                             >
-                              Food
+                              <h5>
+                                <strong>Apples</strong>
+                              </h5>
                             </div>
                           </Col>
                         </Row>
                         <Row className="d-flex flex-row-reverse">
-                          <Button
-                            key={item._id}
-                            className="mb-3 mx-3 w-50 "
-                            variant="outline-secondary"
-                            value={item.merch._id}
-                            onClick={handleButton}
-                          >
-                            Select Theme
-                          </Button>
+                          <Col className="pb-3">
+                            <Button
+                              key={item._id}
+                              className=" w-25 btn-sm px-2"
+                              variant="outline-secondary"
+                              value={item.merch._id}
+                              onClick={handleButton}
+                            >
+                              Select Theme
+                            </Button>
+                          </Col>
                         </Row>
                       </Card>
-                    </Col>
+                    </Row>
                   ))}
                 </Row>
               </Card.Body>
@@ -178,9 +187,12 @@ const Profile = () => {
         variant="success"
         className="text-center position-absolute top-50 start-50 translate-middle"
       >
-        <strong>Theme Changed</strong>
-
-        <button aria-label="Close" onClick={alertButton}>X</button>
+        <h4>
+          Theme Changed{" "}
+          <Button className="btn-sm" variant="success" onClick={alertButton}>
+            X
+          </Button>
+        </h4>
       </Alert>
     </>
   );

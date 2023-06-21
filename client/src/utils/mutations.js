@@ -1,31 +1,20 @@
 import { gql } from "@apollo/client";
 
-
-
 export const UPDATE_CURRENCY = gql`
-mutation Mutation($currency: Int!) {
-  updateCurrency(currency: $currency) {
-    currency
+  mutation Mutation($currency: Int!) {
+    updateCurrency(currency: $currency) {
+      currency
+    }
   }
-}
-`; 
+`;
 
 export const PURCHASE_ITEM = gql`
-mutation Mutation($merch: String!, $currency: Int!) {
-  addItem(merch: $merch) {
-    _id
-  }
-  updateCurrency(currency: $currency) {
-    currency
-  }
-}
-`; 
-
-export const UPDATE_SCORE = gql`
-  mutation UpdateScore($wins: Int!, $losses: Int!) {
-    updateScore(wins: $wins, losses: $losses) {
-      wins
-      losses
+  mutation Mutation($merch: String!, $currency: Int!) {
+    addItem(merch: $merch) {
+      _id
+    }
+    updateCurrency(currency: $currency) {
+      currency
     }
   }
 `;
@@ -49,6 +38,15 @@ export const ADD_USER = gql`
       user {
         _id
         username
+      }
+    }
+  }
+`;
+export const ADD_SCORE = gql`
+  mutation UpdateGames($score: Int!, $time: Int!) {
+    updateGames(score: $score, time: $time) {
+      games {
+        _id
       }
     }
   }
